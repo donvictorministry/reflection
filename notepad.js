@@ -1,7 +1,7 @@
 /* =====================================================================
-   NOTEPAD MODULE — full-page notepad plugged into the right sidebar.
+   NOTEPAD MODULE — full-page notepad opened from the bottom navigation (Note).
    Independent module: delete this file (and its script tag) and the app
-   keeps working (the Notepad menu item simply disappears). Talks to the
+   keeps working (the Note tab simply disappears). Talks to the
    shell only via DV. Owns its own styles, markup, storage and route.
    Never uses browser alert / confirm / prompt.
    ===================================================================== */
@@ -38,6 +38,7 @@
       share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
       eye: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
       eyeoff: '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>',
+      imp: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
       note: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>'
     };
     function svg(p, s) { s = s || 22; return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; }
@@ -56,10 +57,12 @@
       '.dv-np-pill.dv-np-cur{background:var(--dv-primary);color:#fff}' +
       '.dv-np-pill b{overflow:hidden;text-overflow:ellipsis;font-weight:700}' +
       '.dv-np-none{font-size:1rem;color:var(--dv-text-sub);white-space:nowrap}' +
-      '.dv-np-tools{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:10px 12px;border-bottom:1px solid var(--dv-border);scrollbar-width:none;flex-shrink:0;background:var(--dv-surface)}' +
-      '.dv-np-tool{flex:none;display:flex;align-items:center;gap:8px;padding:10px 16px;min-height:48px;border-radius:24px;border:2px solid var(--dv-border);background:var(--dv-bg);color:var(--dv-text);font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap}' +
-      '.dv-np-tool:active{transform:scale(0.96)}' +
-      '.dv-np-tool.dv-np-save{background:#16A34A;border-color:#16A34A;color:#fff}' +
+      '.dv-np-tools{display:flex;gap:4px;overflow-x:auto;overflow-y:hidden;padding:8px 8px;border-bottom:3px solid var(--dv-border);scrollbar-width:none;flex-shrink:0;background:var(--dv-surface)}' +
+      '.dv-np-tool{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:84px;padding:8px 12px;border:none;border-radius:12px;background:transparent;color:var(--dv-text);font-size:1rem;font-weight:500;font-family:inherit;cursor:pointer;white-space:nowrap}' +
+      '.dv-np-tool svg{color:var(--dv-primary)}' +
+      '.dv-np-tool:active{background:var(--dv-bg)}' +
+      '.dv-np-savebtn{flex:none;display:flex;align-items:center;gap:10px;padding:10px 22px;border:none;border-radius:999px;background:#FFD700;color:#FF0000;font-size:1.2rem;font-weight:800;font-family:inherit;cursor:pointer}' +
+      '.dv-np-savebtn:active{opacity:0.8}' +
       '.dv-np-editor{flex:1;width:100%;border:none;outline:none;resize:none;padding:16px;background:var(--dv-surface);color:var(--dv-text);font-size:23px;line-height:1.6;font-family:Roboto,sans-serif}' +
       '.dv-np-list{flex:1;overflow-y:auto;display:flex;flex-direction:column}' +
       '.dv-np-row{display:flex;align-items:center;gap:16px;width:100%;padding:20px 18px;border:none;border-bottom:1px solid var(--dv-border);background:var(--dv-surface);color:var(--dv-text);font-size:1.2rem;font-weight:700;font-family:inherit;cursor:pointer;text-align:left}' +
@@ -74,7 +77,7 @@
       '.dv-np-mi svg{color:var(--dv-primary)}' +
       '.dv-np-dlg{position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;padding:20px;font-family:Roboto,sans-serif}' +
       '.dv-np-dlg.dv-np-on{display:flex}' +
-      '.dv-np-card{width:100%;max-width:420px;background:var(--dv-surface);color:var(--dv-text);border-radius:16px;padding:22px;box-shadow:var(--dv-shadow-lg)}' +
+      '.dv-np-card{width:100%;background:var(--dv-surface);color:var(--dv-text);border-radius:16px;padding:22px;box-shadow:var(--dv-shadow-lg)}' +
       '.dv-np-ct{font-size:1.3rem;font-weight:800;margin-bottom:10px}' +
       '.dv-np-cm{font-size:1.05rem;color:var(--dv-text-sub);line-height:1.5;margin-bottom:14px}' +
       '.dv-np-iw{position:relative;margin-bottom:16px}' +
@@ -94,24 +97,26 @@
     /* ===== MARKUP ===== */
     var tools = [
       ['new', 'plus', '+ New Note'], ['redo', 'redo', 'Redo'], ['undo', 'undo', 'Undo'], ['paste', 'paste', 'Paste'],
-      ['copy', 'copy', 'Copy'], ['exit', 'exit', 'Exit'], ['save', 'save', 'Save']
+      ['copy', 'copy', 'Copy'], ['import', 'imp', 'Import'], ['export', 'save', 'Export'], ['exit', 'exit', 'Exit']
     ];
     var toolsHTML = tools.map(function(t) {
-      return '<button class="dv-np-tool' + (t[0] === 'save' ? ' dv-np-save' : '') + '" data-dvnp="' + t[0] + '">' + svg(ic[t[1]], 20) + t[2] + '</button>';
+      return '<button class="dv-np-tool" data-dvnp="' + t[0] + '">' + svg(ic[t[1]], 30) + '<span>' + t[2] + '</span></button>';
     }).join('');
     var rows = [['open', 'open', 'Open'], ['rename', 'rename', 'Rename'], ['pin', 'lock', 'PIN'], ['delete', 'del', 'Delete'], ['share', 'share', 'Share']];
     var rowsHTML = rows.map(function(r) {
       return '<button class="dv-np-row' + (r[0] === 'delete' ? ' dv-np-danger' : '') + '" data-dvact="' + r[0] + '">' + svg(ic[r[1]], 24) + r[2] + (r[0] === 'pin' ? '<small id="dvNpPinState"></small>' : '') + '</button>';
     }).join('');
-    var menu = [['wa', 'share', 'WhatsApp'], ['bt', 'share', 'Bluetooth'], ['imp', 'save', 'Import to device'], ['x', 'exit', 'Exit']];
+    var menu = [['wa', 'share', 'WhatsApp'], ['bt', 'share', 'Bluetooth'], ['imp', 'save', 'Export to device'], ['x', 'exit', 'Exit']];
     var menuHTML = menu.map(function(m) { return '<button class="dv-np-mi" data-dvsh="' + m[0] + '">' + svg(ic[m[1]], 22) + m[2] + '</button>'; }).join('');
 
     document.body.insertAdjacentHTML('beforeend',
       '<div class="dv-np" id="dvNpPage">' +
-        '<div class="dv-np-bar"><button class="dv-icon-btn" id="dvNpBack" aria-label="Back">' + svg(ic.back, 24) + '</button><span>Notepad</span></div>' +
+        '<div class="dv-np-bar"><button class="dv-icon-btn" id="dvNpBack" aria-label="Back">' + svg(ic.back, 24) + '</button><span>Notepad</span>' +
+          '<button class="dv-np-savebtn" id="dvNpSave">' + svg(ic.save, 26) + 'SAVE</button></div>' +
         '<div class="dv-np-pills" id="dvNpPills"></div>' +
         '<div class="dv-np-tools" id="dvNpTools">' + toolsHTML + '</div>' +
         '<textarea class="dv-np-editor" id="dvNpEditor" placeholder="Start writing..." spellcheck="true"></textarea>' +
+        '<input type="file" id="dvNpFile" accept=".txt,text/plain" style="display:none">' +
       '</div>' +
       '<div class="dv-np" id="dvNpActions">' +
         '<div class="dv-np-bar"><button class="dv-icon-btn" id="dvNpActBack" aria-label="Back">' + svg(ic.back, 24) + '</button><span id="dvNpActTitle"></span></div>' +
@@ -240,6 +245,26 @@
       }
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(function() { toast('Note copied'); }).catch(fallback);
       else fallback();
+    }
+    function doImport() { Q('#dvNpFile').value = ''; Q('#dvNpFile').click(); }
+    function onImportFile() {
+      var f = Q('#dvNpFile').files && Q('#dvNpFile').files[0];
+      if (!f) return;
+      var r = new FileReader();
+      r.onload = function() { flush(); setText(String(r.result || '')); curId = null; renderPills(); toast('Note imported'); };
+      r.onerror = function() { toast('Could not read the file'); };
+      r.readAsText(f);
+    }
+    function doExport() {
+      var v = Q('#dvNpEditor').value;
+      if (!v.trim()) { toast('Nothing to export'); return; }
+      var cur = curId ? findNote(curId) : null;
+      var t = cur ? cur.title : 'note';
+      var blob = new Blob([v], { type: 'text/plain' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = (t.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'note') + '.txt';
+      document.body.appendChild(a); a.click(); a.remove();
+      toast('Note exported to your device');
     }
     function doSave() {
       var ta = Q('#dvNpEditor');
@@ -372,13 +397,16 @@
       else if (k === 'undo') doUndo();
       else if (k === 'paste') doPaste();
       else if (k === 'copy') doCopy();
+      else if (k === 'import') doImport();
+      else if (k === 'export') doExport();
       else if (k === 'exit') { DV.closeRoute(); toast('Notepad closed'); }
-      else if (k === 'save') doSave();
     });
     Q('#dvNpPills').addEventListener('click', function(e) {
       var p = e.target.closest('[data-dvid]'); if (p) showActions(p.getAttribute('data-dvid'));
     });
     Q('#dvNpBack').addEventListener('click', function() { DV.closeRoute(); });
+    Q('#dvNpSave').addEventListener('click', doSave);
+    Q('#dvNpFile').addEventListener('change', onImportFile);
     Q('#dvNpActBack').addEventListener('click', hideActions);
     Q('#dvNpActions').addEventListener('click', function(e) {
       var s = e.target.closest('[data-dvsh]');
@@ -412,11 +440,15 @@
         Q('#dvNpPage').classList.remove('dv-np-on');
       }
     });
-    DV.addRightItem({
-      key: 'notepad_mod',
-      label: 'Notepad',
+    DV.addNavItem({
+      key: 'notepad',
+      id: 'dvNoteNavBtn',
+      html: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + ic.note + '</svg>Note'
+    });
+    DV.addQuickAction({
+      label: 'Note',
       route: 'notepad',
-      order: 10,
+      order: 20,
       icon: ic.note
     });
   } catch (e) {}
