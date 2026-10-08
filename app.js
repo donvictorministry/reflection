@@ -266,9 +266,7 @@ function dvShareApp() {
   if (navigator.share) {
     navigator.share({ title:'Reflect & Align', text:'Reflect on your life purpose. Align with divine direction.', url: window.location.href }).catch(function(){});
   } else {
-    navigator.clipboard && navigator.clipboard.writeText(window.location.href).then(function() {
-      dvShowToast('App link copied');
-    });
+    dvShowToast('Sharing is not supported on this device');
   }
 }
 
@@ -353,12 +351,12 @@ function dvBindTodoCheckboxes() {
 function dvBuildQuickActions() {
   var box = document.getElementById('dvQuickActions');
   var items = dvQuickActions.slice().sort(function(a, b) { return (a.order - b.order) || (a.seq - b.seq); });
-  if (!items.length) { box.parentNode.style.display = 'none'; return; }
+  if (!items.length) { box.style.display = 'none'; document.getElementById('dvQuickTitle').style.display = 'none'; return; }
   var html = '';
   for (var i = 0; i < items.length; i++) {
-    html += '<button class="dv-btn dv-btn-primary dv-btn-full" data-dv-qa="' + i + '">' +
-      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + (items[i].icon || '') + '</svg>' +
-      items[i].label + '</button>';
+    html += '<button class="dv-qa-btn" data-dv-qa="' + i + '">' +
+      '<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (items[i].icon || '') + '</svg>' +
+      '<span>' + items[i].label + '</span></button>';
   }
   box.innerHTML = html;
   box.querySelectorAll('button').forEach(function(btn) {
@@ -425,6 +423,7 @@ function dvResolve() {
   var btns = document.querySelectorAll('.dv-nav-item');
   var hit = false;
   btns.forEach(function(b) { if (b.getAttribute('data-dv-page') === navKey) hit = true; });
+  if (route.navNone) btns.forEach(function(b) { b.classList.remove('dv-nav-active'); });
   if (hit) btns.forEach(function(b) { b.classList.toggle('dv-nav-active', b.getAttribute('data-dv-page') === navKey); });
 }
 function dvNavigate(slug, replace) {
