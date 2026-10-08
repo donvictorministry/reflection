@@ -405,226 +405,61 @@
 }
 .dvg-name-input:focus { border-color: var(--brand); }
 
-/* ══ CERTIFICATE FULL SCREEN ══ */
+/* ══ CERTIFICATE BANNER ══ */
 #dv-cert-screen {
-  padding: 0;
+  padding: 16px 12px;
   justify-content: flex-start;
 }
-.dvg-cert-wrap {
+.dvg-cert-box {
   width: 100%;
-  min-height: 100%;
-  background: var(--cert-bg);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0 24px;
-  position: relative;
-  overflow-x: hidden;
+  gap: 14px;
 }
-
-/* outer decorative frame */
-.dvg-cert-frame {
-  position: absolute;
-  inset: 10px;
-  border: 3px double var(--cert-frame);
-  border-radius: 4px;
-  pointer-events: none;
-  z-index: 1;
-}
-.dvg-cert-frame-inner {
-  position: absolute;
-  inset: 17px;
-  border: 1px solid var(--cert-frame);
-  border-radius: 2px;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.5;
-}
-
-/* corner cross ornaments */
-.dvg-cert-corner {
-  position: absolute;
-  width: 36px;
-  height: 36px;
-  z-index: 2;
-  pointer-events: none;
-}
-.dvg-cert-corner svg { width: 100%; height: 100%; }
-.dvg-cert-corner.tl { top: 6px;  left: 6px; }
-.dvg-cert-corner.tr { top: 6px;  right: 6px; transform: scaleX(-1); }
-.dvg-cert-corner.bl { bottom: 6px; left: 6px; transform: scaleY(-1); }
-.dvg-cert-corner.br { bottom: 6px; right: 6px; transform: scale(-1,-1); }
-
-/* watermark seal */
-.dvg-cert-watermark {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(70dvw, 280px);
-  height: min(70dvw, 280px);
-  opacity: 0.06;
-  pointer-events: none;
-  z-index: 0;
-}
-.dvg-cert-watermark svg { width: 100%; height: 100%; }
-
-/* cert content */
-.dvg-cert-content {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 48px 32px 24px;
+.dvg-cert-img {
   width: 100%;
-  gap: 10px;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
 }
-.dvg-cert-ministry {
+.dvg-cert-url {
   font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--cert-frame);
-  text-align: center;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.dvg-cert-h1 {
-  font-size: 1.9rem;
-  font-weight: 900;
-  color: var(--cert-txt);
-  text-align: center;
-  letter-spacing: 0.04em;
-  line-height: 1.2;
-}
-.dvg-cert-sub {
-  font-size: 1.2rem;
-  color: var(--cert-mute);
-  text-align: center;
-}
-.dvg-cert-rule {
-  width: 80%;
-  height: 0;
-  border: none;
-  border-top: 2px solid var(--cert-frame);
-  margin: 6px 0;
-  opacity: 0.6;
-}
-.dvg-cert-rule-dbl {
-  width: 60%;
-  height: 6px;
-  border: none;
-  border-top: 2px solid var(--cert-frame);
-  border-bottom: 2px solid var(--cert-frame);
-  margin: 4px 0;
-  opacity: 0.5;
-}
-.dvg-cert-presented {
-  font-size: 1.2rem;
-  color: var(--cert-mute);
-  text-align: center;
-  font-style: italic;
-}
-.dvg-cert-player-name {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--brand);
-  text-align: center;
-  letter-spacing: 0.02em;
-}
-.dvg-cert-achievement {
-  font-size: 1.2rem;
-  color: var(--cert-txt);
+  color: var(--text-mute);
   text-align: center;
   line-height: 1.5;
-  max-width: 280px;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
-.dvg-cert-badge-label {
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: var(--cert-frame);
-  text-align: center;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.dvg-cert-stats-row {
-  display: flex;
-  gap: 28px;
-  justify-content: center;
-  width: 100%;
-  margin: 4px 0;
-}
-.dvg-cert-stat-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-.dvg-cert-stat-val {
-  font-size: 1.7rem;
-  font-weight: 900;
-  color: var(--brand);
-}
-.dvg-cert-stat-lbl {
-  font-size: 1.2rem;
-  color: var(--cert-mute);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.dvg-cert-verse-txt {
-  font-size: 1.2rem;
-  font-style: italic;
-  color: var(--cert-mute);
-  text-align: center;
-  line-height: 1.5;
-  max-width: 280px;
-}
-.dvg-cert-issuer {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--cert-txt);
-  text-align: center;
-}
-.dvg-cert-contact {
-  font-size: 1.2rem;
-  color: var(--cert-mute);
-  text-align: center;
-  line-height: 1.6;
-}
-.dvg-cert-date {
-  font-size: 1.2rem;
-  color: var(--cert-mute);
-  text-align: center;
-}
-
-/* share buttons */
 .dvg-cert-share-row {
   display: flex;
+  flex-wrap: nowrap;
   gap: 12px;
-  flex-wrap: wrap;
   justify-content: center;
-  margin-top: 8px;
-  position: relative;
-  z-index: 3;
+  align-items: center;
+  width: 100%;
 }
 .dvg-share-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 14px 22px;
-  border-radius: 999px;
   border: none;
   font-size: 1.2rem;
   font-weight: 700;
+  font-family: inherit;
   cursor: pointer;
-  min-height: 52px;
+  min-height: 56px;
   transition: opacity .15s;
 }
 .dvg-share-btn:active { opacity: 0.75; }
-.dvg-share-wa { background: #25D366; color: #fff; }
-.dvg-share-fb { background: #1877F2; color: #fff; }
+.dvg-share-wa, .dvg-share-fb { width: 56px; border-radius: 50%; color: #fff; flex: none; }
+.dvg-share-wa { background: #25D366; }
+.dvg-share-fb { background: #1877F2; }
 .dvg-share-close {
+  flex: 1;
+  border-radius: 999px;
+  padding: 0 24px;
   background: var(--btn-bg);
   color: var(--btn-txt);
   border: 2px solid var(--rule);
@@ -724,78 +559,20 @@
     </div>
   </div>
 
-  <!-- ── CERTIFICATE SCREEN ── -->
+  <!-- ── CERTIFICATE SCREEN (banner image) ── -->
   <div class="dvg-screen" id="dv-cert-screen">
-    <div class="dvg-cert-wrap" id="dvg-cert-wrap">
-
-      <!-- frame ornaments -->
-      <div class="dvg-cert-frame"></div>
-      <div class="dvg-cert-frame-inner"></div>
-
-      <!-- corner crosses -->
-      <div class="dvg-cert-corner tl">
-        <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <line x1="18" y1="4" x2="18" y2="32"/><line x1="8" y1="13" x2="28" y2="13"/>
-          <line x1="4" y1="4" x2="14" y2="4"/><line x1="4" y1="4" x2="4" y2="14"/>
-        </svg>
-      </div>
-      <div class="dvg-cert-corner tr">
-        <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <line x1="18" y1="4" x2="18" y2="32"/><line x1="8" y1="13" x2="28" y2="13"/>
-          <line x1="4" y1="4" x2="14" y2="4"/><line x1="4" y1="4" x2="4" y2="14"/>
-        </svg>
-      </div>
-      <div class="dvg-cert-corner bl">
-        <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <line x1="18" y1="4" x2="18" y2="32"/><line x1="8" y1="13" x2="28" y2="13"/>
-          <line x1="4" y1="4" x2="14" y2="4"/><line x1="4" y1="4" x2="4" y2="14"/>
-        </svg>
-      </div>
-      <div class="dvg-cert-corner br">
-        <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <line x1="18" y1="4" x2="18" y2="32"/><line x1="8" y1="13" x2="28" y2="13"/>
-          <line x1="4" y1="4" x2="14" y2="4"/><line x1="4" y1="4" x2="4" y2="14"/>
-        </svg>
-      </div>
-
-      <!-- watermark seal -->
-      <div class="dvg-cert-watermark">
-        <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="4">
-          <circle cx="100" cy="100" r="90"/>
-          <circle cx="100" cy="100" r="78"/>
-          <line x1="100" y1="22" x2="100" y2="178"/>
-          <line x1="50" y1="65" x2="150" y2="65"/>
-        </svg>
-      </div>
-
-      <!-- content -->
-      <div class="dvg-cert-content">
-        <div class="dvg-cert-ministry" id="dvg-cert-ministry">YOUR_MINISTRY_NAME</div>
-        <div class="dvg-cert-h1">Certificate of Faith</div>
-        <div class="dvg-cert-rule-dbl"></div>
-        <div class="dvg-cert-presented">This certificate is proudly presented to</div>
-        <div class="dvg-cert-player-name" id="dvg-cert-player">Faithful Player</div>
-        <div class="dvg-cert-rule"></div>
-        <div class="dvg-cert-achievement">For completing the <strong>JESUS Slide Puzzle</strong> and earning the faith badge of</div>
-        <div class="dvg-cert-badge-label" id="dvg-cert-badge">Believer</div>
-        <div class="dvg-cert-rule"></div>
-        <div class="dvg-cert-issuer" id="dvg-cert-issuer">Presented by: Rev. Chris Johnson, PhD</div>
-        <div class="dvg-cert-date" id="dvg-cert-date"></div>
-      </div>
-
-      <!-- share + close -->
+    <div class="dvg-cert-box">
+      <img class="dvg-cert-img" id="dvg-cert-img" alt="Certificate of Faith">
+      <div class="dvg-cert-url" id="dvg-cert-url"></div>
       <div class="dvg-cert-share-row">
-        <button class="dvg-share-btn dvg-share-wa" id="dvg-share-wa">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.523 5.854L.057 23.882l6.196-1.624A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 0 1-5.003-1.374l-.36-.214-3.676.964.981-3.585-.234-.369A9.818 9.818 0 1 1 12 21.818z"/></svg>
-          WhatsApp
+        <button class="dvg-share-btn dvg-share-wa" id="dvg-share-wa" aria-label="Share on WhatsApp">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.523 5.854L.057 23.882l6.196-1.624A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 0 1-5.003-1.374l-.36-.214-3.676.964.981-3.585-.234-.369A9.818 9.818 0 1 1 12 21.818z"/></svg>
         </button>
-        <button class="dvg-share-btn dvg-share-fb" id="dvg-share-fb">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
-          Facebook
+        <button class="dvg-share-btn dvg-share-fb" id="dvg-share-fb" aria-label="Share on Facebook">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
         </button>
         <button class="dvg-share-btn dvg-share-close" id="dvg-cert-close-btn">Close</button>
       </div>
-
     </div>
   </div>
 
@@ -1132,15 +909,71 @@
     }
   }
 
-  function buildCert(){
-    var badge=badgeFor(S.wins)||'Faithful Player';
-    var verse=S.lastVerse||VERSES[0];
+  function urlLines(){
+    var u=window.location.origin+window.location.pathname;
+    var m=/^(https?:\/\/[^\/]+)(.*)$/.exec(u);
+    return m?{a:m[1],b:m[2]||'/'}:{a:u,b:''};
+  }
+  function wrapText(x,text,maxW){
+    var words=text.split(' '),lines=[],line='';
+    for(var i=0;i<words.length;i++){
+      var t=line?line+' '+words[i]:words[i];
+      if(x.measureText(t).width>maxW&&line){ lines.push(line); line=words[i]; } else line=t;
+    }
+    if(line) lines.push(line);
+    return lines;
+  }
+  function drawCert(cb){
+    var W=1200,H=900,c=document.createElement('canvas');
+    c.width=W; c.height=H;
+    var x=c.getContext('2d');
+    var bg='#fffdf2',frame='#c8a000',txt='#2a1a00',mute='#7a5200',brand='#1877F2';
+    x.fillStyle=bg; x.fillRect(0,0,W,H);
+    x.strokeStyle=frame; x.lineWidth=6; x.strokeRect(24,24,W-48,H-48);
+    x.lineWidth=2; x.globalAlpha=0.6; x.strokeRect(42,42,W-84,H-84); x.globalAlpha=1;
+    x.lineWidth=5; x.lineCap='round';
+    [[70,70],[W-70,70],[70,H-70],[W-70,H-70]].forEach(function(p){
+      x.beginPath(); x.moveTo(p[0],p[1]-26); x.lineTo(p[0],p[1]+26); x.moveTo(p[0]-18,p[1]-8); x.lineTo(p[0]+18,p[1]-8); x.stroke();
+    });
+    x.globalAlpha=0.07; x.lineWidth=10;
+    x.beginPath(); x.arc(W/2,H/2,250,0,Math.PI*2); x.stroke();
+    x.beginPath(); x.moveTo(W/2,H/2-250); x.lineTo(W/2,H/2+250); x.moveTo(W/2-150,H/2-110); x.lineTo(W/2+150,H/2-110); x.stroke();
+    x.globalAlpha=1;
+    x.textAlign='center'; x.textBaseline='top';
+    function T(s,y,font,col){ x.font=font; x.fillStyle=col; x.fillText(s,W/2,y); }
+    function R(y,dbl){
+      x.strokeStyle=frame; x.lineWidth=3; x.globalAlpha=0.7;
+      x.beginPath(); x.moveTo(W*0.2,y); x.lineTo(W*0.8,y); x.stroke();
+      if(dbl){ x.beginPath(); x.moveTo(W*0.2,y+10); x.lineTo(W*0.8,y+10); x.stroke(); }
+      x.globalAlpha=1;
+    }
+    var badge=(badgeFor(S.wins)||'Faithful Player').toUpperCase();
     var name=S.playerName||'Faithful Player';
-
-    G('dvg-cert-ministry').textContent  = CFG.MINISTRY;
-    G('dvg-cert-player').textContent    = name;
-    G('dvg-cert-badge').textContent     = badge;
-    G('dvg-cert-date').textContent      = 'Date issued: ' + new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    T(CFG.MINISTRY.toUpperCase(),92,'bold 36px Roboto, sans-serif',frame);
+    T('Certificate of Faith',146,'bold 84px Roboto, sans-serif',txt);
+    R(250,true);
+    T('This certificate is proudly presented to',282,'italic 34px Roboto, sans-serif',mute);
+    var size=88;
+    for(;size>=36;size-=2){ x.font='bold '+size+'px Roboto, sans-serif'; if(x.measureText(name).width<=960) break; }
+    T(name,334,'bold '+size+'px Roboto, sans-serif',brand);
+    R(450,false);
+    x.font='36px Roboto, sans-serif'; x.fillStyle=txt;
+    wrapText(x,'For completing the JESUS Slide Puzzle and earning the faith badge of',940).forEach(function(l,i){ x.fillText(l,W/2,476+i*48); });
+    T(badge,582,'bold 72px Roboto, sans-serif',frame);
+    R(690,true);
+    T('Presented by: Rev. Chris Johnson, PhD',722,'bold 40px Roboto, sans-serif',txt);
+    T('Date issued: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}),780,'34px Roboto, sans-serif',mute);
+    c.toBlob(cb,'image/png');
+  }
+  function buildCert(){
+    drawCert(function(blob){
+      if(!blob) return;
+      if(S.certUrl) URL.revokeObjectURL(S.certUrl);
+      S.certBlob=blob; S.certUrl=URL.createObjectURL(blob);
+      G('dvg-cert-img').src=S.certUrl;
+    });
+    var u=urlLines();
+    G('dvg-cert-url').innerHTML=u.a+'<br>'+u.b;
   }
 
   function shareMsg(){
@@ -1205,8 +1038,11 @@
   G('dvg-cert-close-btn').addEventListener('click',function(){ hideAll(); });
 
   G('dvg-share-wa').addEventListener('click',function(){
-    var url='https://wa.me/?text='+encodeURIComponent(shareMsg());
-    window.open(url,'_blank');
+    if(S.certBlob&&window.File&&navigator.canShare){
+      var f=new File([S.certBlob],'certificate-of-faith.png',{type:'image/png'});
+      if(navigator.canShare({files:[f]})){ navigator.share({files:[f],text:shareMsg()}).catch(function(){}); return; }
+    }
+    window.open('https://wa.me/?text='+encodeURIComponent(shareMsg()),'_blank');
   });
   G('dvg-share-fb').addEventListener('click',function(){
     var url='https://www.facebook.com/sharer/sharer.php?quote='+encodeURIComponent(shareMsg())+'&u='+encodeURIComponent(CFG.APP_URL);
@@ -1223,20 +1059,22 @@
     S.paused=true;
   }
 
-  DV.addNavItem({
-    key: 'game',
-    id: 'dv-bible-game-widget-trigger',
-    html: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="4"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="11" r="1"/><circle cx="18" cy="13" r="1"/></svg>Game'
+  DV.addRightItem({
+    key: 'game_mod',
+    label: 'Game',
+    route: 'game',
+    order: 10,
+    icon: '<rect x="2" y="6" width="20" height="12" rx="4"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="11" r="1"/><circle cx="18" cy="13" r="1"/>'
   });
   DV.addPage('game', 'dv-bg-w', {
     title: 'JESUS Slide Puzzle',
     description: 'Slide the tiles to spell JESUS. Earn faith badges and a Certificate of Faith.',
-    navKey: 'game',
+    navNone: true,
     open: openGame,
     close: closeGame
   });
   if (DV.addQuickAction) DV.addQuickAction({
-    label: 'Play the JESUS Puzzle',
+    label: 'Game',
     route: 'game',
     order: 30,
     icon: '<rect x="2" y="6" width="20" height="12" rx="4"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="11" r="1"/><circle cx="18" cy="13" r="1"/>'
