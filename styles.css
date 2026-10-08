@@ -199,7 +199,7 @@ body {
   flex: 1; overflow-y: auto;
   padding: 20px 18px;
   line-height: 1.65;
-  max-width: 640px; margin: 0 auto; width: 100%;
+  width: 100%;
 }
 .dv-modal-body p { margin-bottom: 14px; color: var(--dv-text-sub); font-size: 1rem; }
 .dv-modal-body h3 { margin: 18px 0 8px; font-size: 1.05rem; color: var(--dv-text); }
@@ -258,8 +258,7 @@ body {
   min-height: 48px;
 }
 .dv-sit-btn:active { transform: scale(0.96); }
-.dv-sit-btn.dv-sit-active,
-.dv-sit-btn:hover {
+.dv-sit-btn.dv-sit-active {
   background: var(--dv-primary); color: #fff; border-color: var(--dv-primary);
 }
 
@@ -456,5 +455,13 @@ body {
 .dv-mt8 { margin-top: 8px; }
 
 /* ===== QUICK ACTIONS ===== */
-.dv-quick { display: flex; flex-direction: column; gap: 10px; }
-.dv-quick .dv-btn { justify-content: flex-start; gap: 12px; font-size: 1.1rem; }
+.dv-qa-title { font-size: 1.3rem; font-weight: 700; color: var(--dv-text); margin: 4px 4px 12px; }
+.dv-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.dv-qa-btn {
+  background: var(--dv-surface); border: 3px solid var(--dv-border); border-radius: 28px;
+  min-height: 126px; padding: 14px 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  color: var(--dv-primary); font-family: inherit; cursor: pointer;
+}
+.dv-qa-btn span { font-size: 1.2rem; font-weight: 700; color: var(--dv-text); text-align: center; line-height: 1.25; }
+.dv-qa-btn:active { transform: scale(0.97); background: var(--dv-bg); }
