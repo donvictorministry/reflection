@@ -26,7 +26,7 @@
       '.dv-dev-bio h4{font-size:1.2rem;font-weight:800;color:var(--dv-text);margin:.5rem 0 0;padding-left:10px;border-left:4px solid var(--dv-primary);line-height:1.65rem}' +
       '.dv-dev-bio p{margin:0 0 .3rem}' +
       '.dv-dev-bio ul{margin:0 0 .3rem;padding-left:22px}' +
-      '.dv-dev-hl{color:var(--dv-primary);font-weight:700}' +
+      '.dv-dev-hl{background:#FFD700;color:#000;font-weight:400;padding:2px 6px;border-radius:6px;border-left:4px solid #000;-webkit-box-decoration-break:clone;box-decoration-break:clone}' +
       '.dv-dev-more[hidden]{display:none}' +
       '.dv-dev-more{background:none;border:none;color:var(--dv-primary);font-weight:700;font-size:1rem;font-family:inherit;cursor:pointer;padding:10px 0;display:block;margin:0 auto}';
     var dvDevStyle = document.createElement('style');
