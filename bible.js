@@ -88,6 +88,12 @@
     /* ===== STYLES ===== */
     var css = '' +
       '#dvPageBible [hidden]{display:none !important}' +
+      '#dvBibleLoading{position:fixed;inset:0;z-index:99998;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:rgba(255,255,255,0.92);pointer-events:auto;touch-action:none}' +
+      '[data-dv-dark="1"] #dvBibleLoading{background:rgba(24,25,26,0.92)}' +
+      '#dvBibleLoading.dv-on{display:flex}' +
+      '.dv-bible-spin{width:64px;height:64px;border-radius:50%;border:7px solid rgba(24,119,242,0.2);border-top-color:#1877F2;animation:dvBSpin .9s linear infinite}' +
+      '@keyframes dvBSpin{to{transform:rotate(360deg)}}' +
+      '.dv-bible-load-t{font-size:1.3rem;font-weight:800;color:#1877F2;text-align:center;padding:0 24px;line-height:1.4}' +
       '#dvPageBible{margin:0 -14px -14px}' +
       '#dvBibleRead .dv-card:last-child{margin-bottom:0}' +
       '#dvBibleFoot{margin-bottom:0}' +
@@ -199,6 +205,14 @@
       '</div>';
 
     document.querySelector('main.dv-container').insertAdjacentHTML('beforeend', pageHTML);
+    document.body.insertAdjacentHTML('beforeend', '<div id="dvBibleLoading"><div class="dv-bible-spin"></div><div class="dv-bible-load-t">Let\'s prepare the app for Offline use</div></div>');
+    var dvBLoadTimer = null;
+    function dvBibleLoad(on) {
+      var l = dvQ('#dvBibleLoading');
+      if (l) l.classList.toggle('dv-on', on);
+      clearTimeout(dvBLoadTimer);
+      if (on) dvBLoadTimer = setTimeout(function() { if (l) l.classList.remove('dv-on'); }, 120000); // safety: never trap the user longer than 2 minutes
+    }
     document.body.insertAdjacentHTML('beforeend', shareHTML);
 
     /* ===== READER ===== */
@@ -477,6 +491,7 @@
       dvBDownloading = true;
       var stt = dvQ('#dvBibleMsg'), btn = dvQ('#dvBibleGo');
       btn.hidden = true;
+      dvBibleLoad(true);
       stt.textContent = 'Preparing the Bible for offline reading...';
       var d = null;
       for (var k = 0; k < dvKjvUrls.length; k++) {
@@ -491,12 +506,13 @@
       if (!d) {
         stt.textContent = 'The Bible will finish preparing as soon as the internet connection returns.';
         btn.hidden = false;
+        dvBibleLoad(false);
       } else {
-        await new Promise(function(r) { setTimeout(r, 30); });
         dvBData = d.books.map(function(b) {
           return { n: b.name, c: b.chapters.map(function(ch) { return ch.verses.map(function(v) { return dvClean(v.text); }); }) };
         });
         try { await dvBPutStored(dvBData); } catch (e) {}
+        dvBibleLoad(false);
         stt.textContent = '';
         var t = dvBPending; dvBPending = null;
         dvBDownloading = false;
@@ -509,7 +525,7 @@
       if (dvBData || dvBDownloading) return;
       dvBGetStored().then(function(d) { if (d) dvBData = d; else dvBibleGet(); }).catch(function() { dvBibleGet(); });
     }
-    setTimeout(dvBibleAuto, 1200);
+    dvBibleAuto();
     window.addEventListener('online', dvBibleAuto);
 
     /* ===== BINDINGS ===== */
