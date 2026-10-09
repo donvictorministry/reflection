@@ -3,7 +3,7 @@
    Independent module: delete this file and the app keeps working online.
    Files that do not exist are skipped silently when caching.
    ===================================================================== */
-var DV_CACHE = 'dv-reflect-v4.1';
+var DV_CACHE = 'dv-reflect-v4.4';
 var DV_FILES = [
   './',
   'index.html',
@@ -15,7 +15,8 @@ var DV_FILES = [
   'game.js',
   'notepad.js',
   'notification.js',
-  'manifest.json'
+  'manifest.json',
+  'kjv.json'
 ];
 
 self.addEventListener('install', function(e) {
@@ -38,7 +39,6 @@ self.addEventListener('fetch', function(e) {
   if (req.method !== 'GET') return;
   var url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
-  if (url.pathname.slice(-9) === 'kjv.json') return; // stored once by the Bible reader
 
   // Page loads (including deep links): network first, offline falls back to the app shell
   if (req.mode === 'navigate') {
