@@ -85,7 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 10px;
+  padding: 4px 10px;
   background: var(--chrome-bg);
   flex-shrink: 0;
   border-bottom: 1.5px solid var(--rule);
@@ -105,8 +105,8 @@
   flex-shrink: 0;
 }
 .dvg-btn {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: none;
   background: var(--btn-bg);
@@ -128,8 +128,8 @@
 .dvg-credit {
   flex-shrink: 0;
   text-align: center;
-  padding: 10px 0 14px;
-  font-size: 1.2rem;
+  padding: 4px 0 6px;
+  font-size: 1rem;
   font-weight: 200;
   color: #000;
 }
@@ -140,7 +140,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 24px 4px;
+  padding: 4px 24px 0;
   flex-shrink: 0;
 }
 .dvg-hud-cell {
@@ -151,13 +151,13 @@
   min-width: 64px;
 }
 .dvg-hud-val {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 800;
   color: var(--brand);
   line-height: 1;
 }
 .dvg-hud-lbl {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-mute);
   text-transform: uppercase;
@@ -197,9 +197,9 @@
 .dvg-subtitle {
   text-align: center;
   color: var(--text-mute);
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-style: italic;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
   flex-shrink: 0;
 }
 
@@ -247,10 +247,10 @@
 .dvg-streak {
   width: 100%;
   max-width: min(90dvw, 330px);
-  margin-top: 22px;
-  padding: 10px 0 4px;
+  margin-top: 8px;
+  padding: 4px 0 0;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--streak-txt);
   background: transparent;
@@ -814,17 +814,6 @@
   }
 
   /* ══ PUZZLE ══ */
-  /* fit the board to the space that is really available (never clipped top or bottom) */
-  function fitGrid(){
-    var b=document.querySelector('#dv-bg-w .dvg-body');
-    if(!b||!b.clientHeight) return;
-    var sub=b.querySelector('.dvg-subtitle'), st=G('dvg-streak');
-    var used=sub.offsetHeight+parseFloat(getComputedStyle(sub).marginBottom)+st.offsetHeight+22+20;
-    var w=Math.min(b.clientWidth*0.9,330,b.clientHeight-used);
-    G('dvg-grid').style.width=Math.max(120,Math.floor(w))+'px';
-  }
-  window.addEventListener('resize',fitGrid);
-
   function newRound(){
     S.moves=0; S.seconds=0; S.paused=false;
     G('dvg-moves').textContent='0';
@@ -846,7 +835,6 @@
     }
     S.tiles=arr;
     renderGrid(); renderDots(); renderStreak(); startTimer();
-    fitGrid();
   }
 
   function renderGrid(glow){
@@ -1088,7 +1076,6 @@
     load(); applyDark(); applySound();
     if(!S.tiles) newRound();
     else S.paused=!!document.querySelector('#dv-bg-w .dvg-screen.on');
-    requestAnimationFrame(fitGrid);
   }
   function closeGame(){
     S.paused=true;
