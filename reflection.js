@@ -612,7 +612,7 @@
     DV.addNavItem({
       key: 'reflection',
       id: 'dvReflectionNavBtn',
-      html: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Reflection'
+      html: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3C8.5 6 6.5 9.5 6.5 14v6l5.5-3 5.5 3v-6C17.5 9.5 15.5 6 12 3z"/><line x1="12" y1="3" x2="12" y2="17"/></svg>Reflect'
     });
 
     DV.addPage('reflection', 'dvPageReflection', {
@@ -647,7 +647,7 @@
         label: 'Reflection',
         route: 'reflections',
         order: 40,
-        icon: '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>'
+        icon: '<path d="M12 3C8.5 6 6.5 9.5 6.5 14v6l5.5-3 5.5 3v-6C17.5 9.5 15.5 6 12 3z"/><line x1="12" y1="3" x2="12" y2="17"/>'
       });
     }
   } catch (e) {}
