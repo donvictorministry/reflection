@@ -69,7 +69,7 @@
   position: relative;
   z-index: 0;
   margin: -14px;
-  height: calc(100dvh - 158px);
+  height: calc(100% + 28px);
   background: linear-gradient(160deg, var(--bg) 0%, var(--bg2) 60%);
   font-family: Roboto, sans-serif;
   flex-direction: column;
@@ -513,6 +513,9 @@
       </button>
       <button class="dvg-btn" id="dvg-pause-btn" aria-label="Pause">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </button>
+      <button class="dvg-btn" id="dvg-exit-btn" aria-label="Exit">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
   </div>
@@ -1009,6 +1012,12 @@
   });
   G('dvg-pause-btn').addEventListener('click',function(){
     S.paused=true; showScreen('dv-pause-screen');
+  });
+  G('dvg-exit-btn').addEventListener('click',function(){
+    stopTimer(); save();
+    S.tiles=null; S.moves=0; S.seconds=0;
+    hideAll();
+    DV.navigate('');
   });
   G('dvg-resume-btn').addEventListener('click',function(){
     S.paused=false; hideAll();
