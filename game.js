@@ -84,7 +84,7 @@
 .dvg-chrome {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 8px 10px;
   background: var(--chrome-bg);
   flex-shrink: 0;
@@ -123,6 +123,17 @@
   color: #fff;
 }
 .dvg-btn:active { opacity: 0.72; }
+
+/* ══ CREDIT (bottom) ══ */
+.dvg-credit {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 10px 0 14px;
+  font-size: 1.2rem;
+  font-weight: 200;
+  color: #000;
+}
+#dv-bg-w.dv-dark .dvg-credit { color: #fff; }
 
 /* ══ HUD ══ */
 .dvg-hud {
@@ -484,7 +495,6 @@
 
   <!-- CHROME -->
   <div class="dvg-chrome">
-    <div class="dvg-chrome-title">&#169; Rev. Chris Johnson</div>
     <div class="dvg-btns">
       <button class="dvg-btn on" id="dvg-snd" aria-label="Sound">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
@@ -529,6 +539,8 @@
     <div class="dvg-grid" id="dvg-grid"></div>
     <div class="dvg-streak" id="dvg-streak">&nbsp;</div>
   </div>
+
+  <div class="dvg-credit">&#169; Rev. Chris Johnson</div>
 
   <!-- ── PAUSE SCREEN ── -->
   <div class="dvg-screen" id="dv-pause-screen">
