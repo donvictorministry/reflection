@@ -449,13 +449,13 @@
     DV.addNavItem({
       key: 'notepad',
       id: 'dvNoteNavBtn',
-      html: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + ic.note + '</svg>Note'
+      html: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + ic.rename + '</svg>Note'
     });
     DV.addQuickAction({
       label: 'Note',
       route: 'notepad',
       order: 20,
-      icon: ic.note
+      icon: ic.rename
     });
   } catch (e) {}
 })();
