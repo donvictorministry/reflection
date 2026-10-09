@@ -188,8 +188,8 @@ body {
 .dv-modal-head {
   position: sticky; top: 0;
   background: var(--dv-primary); color: #fff;
-  padding: 16px;
-  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; gap: 12px;
+  display: flex; align-items: center; justify-content: flex-start;
   border-bottom: 1px solid var(--dv-border);
   box-shadow: var(--dv-shadow); z-index: 1; flex-shrink: 0;
 }
@@ -340,8 +340,8 @@ body {
 .dv-share-modal.dv-active { opacity: 1; pointer-events: auto; }
 .dv-share-modal-head {
   background: var(--dv-primary); color: #fff;
-  padding: 16px;
-  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; gap: 12px;
+  display: flex; align-items: center; justify-content: flex-start;
   flex-shrink: 0;
 }
 .dv-share-modal-head .dv-icon-btn { color: #fff; }
@@ -465,3 +465,8 @@ body {
 }
 .dv-qa-btn span { font-size: 1.2rem; font-weight: 700; color: var(--dv-text); text-align: center; line-height: 1.25; }
 .dv-qa-btn:active { transform: scale(0.97); background: var(--dv-bg); }
+
+/* ===== STREAK ===== */
+.dv-streak { text-align: center; }
+.dv-streak-n { font-size: 1.5rem; font-weight: 800; color: var(--dv-primary); }
+.dv-streak-s { font-size: 1rem; color: var(--dv-text-sub); margin-top: 4px; }
