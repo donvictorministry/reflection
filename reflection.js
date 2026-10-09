@@ -385,12 +385,12 @@
       '.dv-ref-line1,.dv-ref-line3{display:flex;align-items:center;justify-content:space-between;gap:8px}' +
       '.dv-ref-title{flex:1;min-width:0;font-size:1.2rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
       '.dv-ref-date{flex:none;font-size:1rem;font-weight:700}' +
-      '.dv-ref-by{font-size:1.1rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+      '.dv-ref-by{font-size:1.1rem;font-weight:700;color:#1877F2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
       '.dv-ref-snip{flex:1;min-width:0;font-size:1.1rem;color:var(--dv-text-sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
       '.dv-ref-star{flex:none;width:44px;height:44px;margin:-8px -6px -8px 0;display:flex;align-items:center;justify-content:center;color:var(--dv-text-sub)}' +
       '.dv-ref-star.dv-on{color:#FFD700}' +
       '.dv-ref-back{margin-bottom:12px;width:auto;flex:none}' +
-      '.dv-ref-view-title{font-size:1.6rem;font-weight:800;line-height:1.25;color:#000;margin:0 0 10px}[data-dv-dark="1"] .dv-ref-view-title{color:#fff}' +
+      '.dv-ref-view-title{font-size:1.6rem;font-weight:800;line-height:1.25;color:#000;margin:0 0 22px}[data-dv-dark="1"] .dv-ref-view-title{color:#fff}' +
       '.dv-ref-body{position:relative;overflow:hidden;font-size:1.1rem;line-height:1.8rem;color:var(--dv-text)}' +
       '.dv-ref-body.dv-clamp{max-height:calc(3 * 1.8rem)}' +
       '.dv-ref-body.dv-clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2rem;background:linear-gradient(to bottom,transparent,var(--dv-surface))}' +
@@ -463,11 +463,11 @@
         else if (b.t === 'q') body += '<blockquote>\u201C' + dvEsc(b.x) + '\u201D<cite>' + dvEsc(b.r || '') + '</cite></blockquote>';
         else body += '<p>' + dvRefFmt(b.x) + '</p>';
       });
+      body += '<div class="dv-ref-author">By ' + dvEsc(r.author) + '</div>';
       dvQ('#dvRefView').innerHTML =
         '<button class="dv-btn dv-btn-secondary dv-ref-back" id="dvRefBack">&#8249; All Reflections</button>' +
         '<div class="dv-card">' +
           '<div class="dv-ref-view-title">' + dvEsc(r.title) + '</div>' +
-          '<div class="dv-ref-by-line">By ' + dvEsc(r.author) + '</div>' +
           '<div class="dv-ref-body dv-clamp" id="dvRefBody">' + body + '</div>' +
           '<button class="dv-ref-more" id="dvRefToggle" hidden>Show more</button>' +
         '</div>' +
