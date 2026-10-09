@@ -17,9 +17,9 @@
     var dvSlugIdx = {};
     dvBookSlugs.forEach(function(s, i) { dvSlugIdx[s] = i; });
 
-    // Your own copy first (file kjv.json next to index.html), the public source only as a backup
+    // The Bible is read only from your own copy: file kjv.json next to index.html
     var dvBibleSrc = (document.currentScript && document.currentScript.src) || window.location.href;
-    var dvKjvUrls = [new URL('kjv.json', dvBibleSrc).href, 'https://api.getbible.net/v2/kjv.json'];
+    var dvKjvUrls = [new URL('kjv.json', dvBibleSrc).href];
 
     /* ===== STATE ===== */
     var dvBData = null, dvBList = [], dvBShown = 0, dvBSrch = null;
@@ -135,9 +135,9 @@
       '<section class="dv-page" id="dvPageBible">' +
         '<div class="dv-card" id="dvBibleGet">' +
           '<div class="dv-card-title">King James Bible</div>' +
-          '<p class="dv-bible-hint">Download the Bible once, then read it anytime, even without internet.</p>' +
-          '<button class="dv-btn dv-btn-primary dv-btn-full" id="dvBibleGo">' + icoDown + 'Download Bible</button>' +
-          '<p class="dv-bible-hint" id="dvBibleMsg" style="margin-top:12px;margin-bottom:0;"></p>' +
+          '<p class="dv-bible-hint">The Bible is prepared automatically for offline reading.</p>' +
+          '<button class="dv-btn dv-btn-primary dv-btn-full" id="dvBibleGo" hidden>' + icoDown + 'Try Again</button>' +
+          '<p class="dv-bible-hint" id="dvBibleMsg" style="margin-top:12px;margin-bottom:0;">Preparing the Bible for offline reading...</p>' +
         '</div>' +
         '<div id="dvBibleRead" hidden>' +
           '<div class="dv-card">' +
@@ -223,8 +223,8 @@
           target = (last && last.length === 2 && dvBookNames[+last[0]]) ? { bi: +last[0], ci: +last[1] } : { bi: 0, ci: 0 };
         }
         dvBibleChapters(target.bi, target.ci);
-      } else if (auto && target) {
-        dvBPending = target;
+      } else {
+        if (target) dvBPending = target;
         dvBibleGet();
       }
     }
@@ -471,10 +471,13 @@
     }
 
     /* ===== DOWNLOAD (once) ===== */
+    var dvBDownloading = false;
     async function dvBibleGet() {
+      if (dvBDownloading) return;
+      dvBDownloading = true;
       var stt = dvQ('#dvBibleMsg'), btn = dvQ('#dvBibleGo');
-      btn.disabled = true;
-      stt.textContent = 'Downloading the Bible...';
+      btn.hidden = true;
+      stt.textContent = 'Preparing the Bible for offline reading...';
       var d = null;
       for (var k = 0; k < dvKjvUrls.length; k++) {
         try {
@@ -486,9 +489,9 @@
       }
       if (d && !(d.books && d.books.length >= 66)) d = null;
       if (!d) {
-        stt.textContent = 'The Bible could not be downloaded. Please check your internet connection and try again.';
+        stt.textContent = 'The Bible will finish preparing as soon as the internet connection returns.';
+        btn.hidden = false;
       } else {
-        stt.textContent = 'Preparing the Bible...';
         await new Promise(function(r) { setTimeout(r, 30); });
         dvBData = d.books.map(function(b) {
           return { n: b.name, c: b.chapters.map(function(ch) { return ch.verses.map(function(v) { return dvClean(v.text); }); }) };
@@ -496,10 +499,18 @@
         try { await dvBPutStored(dvBData); } catch (e) {}
         stt.textContent = '';
         var t = dvBPending; dvBPending = null;
-        if (t) dvBibleOpen(t.bi, t.ci); else dvBibleOpen();
+        dvBDownloading = false;
+        if (t) dvBibleOpen(t.bi, t.ci);
+        else if (dvQ('#dvPageBible').classList.contains('dv-page-active')) dvBibleOpen();
       }
-      btn.disabled = false;
+      dvBDownloading = false;
     }
+    function dvBibleAuto() {
+      if (dvBData || dvBDownloading) return;
+      dvBGetStored().then(function(d) { if (d) dvBData = d; else dvBibleGet(); }).catch(function() { dvBibleGet(); });
+    }
+    setTimeout(dvBibleAuto, 1200);
+    window.addEventListener('online', dvBibleAuto);
 
     /* ===== BINDINGS ===== */
     (function() {
@@ -511,7 +522,7 @@
         document.documentElement.style.setProperty('--dvBs', e.target.value + 'px');
         try { localStorage.setItem('dvBibleFont', e.target.value); } catch (er) {}
       };
-      dvQ('#dvBibleGo').onclick = dvBibleGet;
+      dvQ('#dvBibleGo').onclick = function() { dvBibleGet(); };
       dvQ('#dvBibleBook').onchange = function() { DV.navigate(dvBibleSlug(+dvQ('#dvBibleBook').value, 0)); };
       dvQ('#dvBibleCh').onchange = function() { DV.navigate(dvBibleSlug(dvBBi, +dvQ('#dvBibleCh').value)); };
       dvQ('#dvBiblePrev').onclick = dvQ('#dvBiblePrev2').onclick = function() { dvBibleStep(-1); };
