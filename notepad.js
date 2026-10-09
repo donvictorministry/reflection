@@ -63,7 +63,8 @@
       '.dv-np-tool:active{background:var(--dv-bg)}' +
       '.dv-np-savebtn{flex:none;display:flex;align-items:center;gap:10px;padding:10px 22px;border:none;border-radius:999px;background:#FFD700;color:#FF0000;font-size:1.2rem;font-weight:800;font-family:inherit;cursor:pointer}' +
       '.dv-np-savebtn:active{opacity:0.8}' +
-      '.dv-np-editor{flex:1;width:100%;border:none;outline:none;resize:none;padding:16px;background:var(--dv-surface);color:var(--dv-text);font-size:23px;line-height:1.6;font-family:Roboto,sans-serif}' +
+      '.dv-np-scroll{flex:1;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column}' +
+      '.dv-np-editor{flex:1 0 auto;min-height:60dvh;overflow:hidden;width:100%;border:none;outline:none;resize:none;padding:16px;background:var(--dv-surface);color:var(--dv-text);font-size:23px;line-height:1.6;font-family:Roboto,sans-serif}' +
       '.dv-np-list{flex:1;overflow-y:auto;display:flex;flex-direction:column}' +
       '.dv-np-row{display:flex;align-items:center;gap:16px;width:100%;padding:20px 18px;border:none;border-bottom:1px solid var(--dv-border);background:var(--dv-surface);color:var(--dv-text);font-size:1.2rem;font-weight:700;font-family:inherit;cursor:pointer;text-align:left}' +
       '.dv-np-row:active{background:var(--dv-bg)}' +
@@ -114,9 +115,11 @@
         '<div class="dv-np-bar"><button class="dv-icon-btn" id="dvNpBack" aria-label="Back">' + svg(ic.back, 24) + '</button><span>Notepad</span>' +
           '<button class="dv-np-savebtn" id="dvNpSave">' + svg(ic.save, 26) + 'SAVE</button></div>' +
         '<div class="dv-np-pills" id="dvNpPills"></div>' +
-        '<div class="dv-np-tools" id="dvNpTools">' + toolsHTML + '</div>' +
-        '<textarea class="dv-np-editor" id="dvNpEditor" placeholder="Start writing..." spellcheck="true"></textarea>' +
-        '<input type="file" id="dvNpFile" accept=".txt,text/plain" style="display:none">' +
+        '<div class="dv-np-scroll" id="dvNpScroll">' +
+          '<div class="dv-np-tools" id="dvNpTools">' + toolsHTML + '</div>' +
+          '<textarea class="dv-np-editor" id="dvNpEditor" placeholder="Start writing..." spellcheck="true"></textarea>' +
+          '<input type="file" id="dvNpFile" accept=".txt,text/plain" style="display:none">' +
+        '</div>' +
       '</div>' +
       '<div class="dv-np" id="dvNpActions">' +
         '<div class="dv-np-bar"><button class="dv-icon-btn" id="dvNpActBack" aria-label="Back">' + svg(ic.back, 24) + '</button><span id="dvNpActTitle"></span></div>' +
@@ -197,7 +200,8 @@
       if (hist.length > 200) hist.shift();
       hi = hist.length - 1;
     }
-    function setText(v) { Q('#dvNpEditor').value = v; flush(); saveDraft(); }
+    function fit() { var t = Q('#dvNpEditor'); t.style.height = 'auto'; t.style.height = t.scrollHeight + 'px'; }
+    function setText(v) { Q('#dvNpEditor').value = v; fit(); flush(); saveDraft(); }
     function resetHistory() { hist = [Q('#dvNpEditor').value]; hi = 0; }
 
     /* ===== PILLS ===== */
@@ -223,8 +227,8 @@
       }
       curId = null; saveDraft(); renderPills(); toast('New note');
     }
-    function doUndo() { flush(); if (hi > 0) { hi--; Q('#dvNpEditor').value = hist[hi]; saveDraft(); toast('Undo'); } else toast('Nothing to undo'); }
-    function doRedo() { flush(); if (hi < hist.length - 1) { hi++; Q('#dvNpEditor').value = hist[hi]; saveDraft(); toast('Redo'); } else toast('Nothing to redo'); }
+    function doUndo() { flush(); if (hi > 0) { hi--; Q('#dvNpEditor').value = hist[hi]; fit(); saveDraft(); toast('Undo'); } else toast('Nothing to undo'); }
+    function doRedo() { flush(); if (hi < hist.length - 1) { hi++; Q('#dvNpEditor').value = hist[hi]; fit(); saveDraft(); toast('Redo'); } else toast('Nothing to redo'); }
     function doPaste() {
       var ta = Q('#dvNpEditor');
       if (!navigator.clipboard || !navigator.clipboard.readText) { toast('Paste is not available. Long-press the editor.'); return; }
@@ -234,7 +238,7 @@
         var s = ta.selectionStart, e = ta.selectionEnd;
         ta.value = ta.value.slice(0, s) + t + ta.value.slice(e);
         ta.selectionStart = ta.selectionEnd = s + t.length;
-        flush(); saveDraft(); toast('Pasted');
+        fit(); flush(); saveDraft(); toast('Pasted');
       }).catch(function() { toast('Paste blocked. Long-press the editor.'); });
     }
     function doCopy() {
@@ -386,6 +390,7 @@
     /* ===== EVENTS ===== */
     var ed = Q('#dvNpEditor');
     ed.addEventListener('input', function() {
+      fit();
       clearTimeout(histTimer);
       histTimer = setTimeout(function() { flush(); saveDraft(); }, 500);
     });
@@ -433,6 +438,7 @@
         resetHistory();
         renderPills();
         Q('#dvNpPage').classList.add('dv-np-on');
+        fit();
       },
       close: function() {
         flush(); saveDraft();
