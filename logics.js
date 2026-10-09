@@ -32,7 +32,7 @@ const dvd5 = "https://script.google.com/macros/s/AKfycbzBZXY6wDVuDsfGOm5mMcKjuRJ
                 const t = await dvca('getTicker', {});
                 if (t && t.length) {
                     const bar = document.createElement('div');
-                    bar.style.cssText = 'position:fixed;bottom:64px;left:0;right:0;background:var(--dvd8, #1877F2);color:var(--dvd9, #fff);padding:5px 0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;z-index:20;';
+                    bar.style.cssText = 'position:fixed;bottom:0px;left:0;right:0;background:var(--dvd8, #1877F2);color:var(--dvd9, #fff);padding:5px 0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;z-index:20;';
                     bar.innerHTML = `<marquee scrollamount="5">${t.map(x => x.text).join(' &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp; ')}</marquee>`;
                     document.body.appendChild(bar);
                 }
