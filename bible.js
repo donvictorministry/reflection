@@ -17,7 +17,9 @@
     var dvSlugIdx = {};
     dvBookSlugs.forEach(function(s, i) { dvSlugIdx[s] = i; });
 
-    var dvKjvUrls = ['https://api.getbible.net/v2/kjv.json'];
+    // Your own copy first (file kjv.json next to index.html), the public source only as a backup
+    var dvBibleSrc = (document.currentScript && document.currentScript.src) || window.location.href;
+    var dvKjvUrls = [new URL('kjv.json', dvBibleSrc).href, 'https://api.getbible.net/v2/kjv.json'];
 
     /* ===== STATE ===== */
     var dvBData = null, dvBList = [], dvBShown = 0, dvBSrch = null;
@@ -171,7 +173,7 @@
           '</div>' +
         '</div>' +
         '<div class="dv-bible-selbar" id="dvBibleSelBar" hidden>' +
-          '<div class="dv-bible-selrow"><span id="dvBibleSelCount"></span><button class="dv-btn dv-btn-secondary" id="dvBibleSelClear" aria-label="Close">&#10005;</button></div>' +
+          '<div class="dv-bible-selrow"><span id="dvBibleSelCount"></span><button class="dv-btn dv-btn-secondary" id="dvBibleSelClear" aria-label="Back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button></div>' +
           '<div class="dv-bible-sw" id="dvBibleSw"></div>' +
           '<div class="dv-bible-selrow">' +
             '<button class="dv-btn dv-btn-primary" id="dvBibleSelShare">Share</button>' +
@@ -184,8 +186,8 @@
     var shareHTML =
       '<div class="dv-share-modal" id="dvBibleShareModal">' +
         '<div class="dv-share-modal-head">' +
+          '<button class="dv-icon-btn" id="dvBibleShareClose" aria-label="Back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>' +
           '<div class="dv-share-modal-title">Share</div>' +
-          '<button class="dv-icon-btn" id="dvBibleShareClose" aria-label="Close share"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>' +
         '</div>' +
         '<div class="dv-share-modal-body">' +
           '<div class="dv-share-verse-preview"><p id="dvBibleSharePrev"></p><span id="dvBibleShareUrl"></span></div>' +
