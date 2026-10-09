@@ -68,8 +68,8 @@
   display: none;
   position: relative;
   z-index: 0;
-  margin: -14px;
-  height: calc(100% + 28px);
+  margin: 0 -14px;
+  height: 100%;
   background: linear-gradient(160deg, var(--bg) 0%, var(--bg2) 60%);
   font-family: Roboto, sans-serif;
   flex-direction: column;
@@ -185,6 +185,7 @@
 
 /* ══ BODY ══ */
 .dvg-body {
+  min-height: 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -813,6 +814,17 @@
   }
 
   /* ══ PUZZLE ══ */
+  /* fit the board to the space that is really available (never clipped top or bottom) */
+  function fitGrid(){
+    var b=document.querySelector('#dv-bg-w .dvg-body');
+    if(!b||!b.clientHeight) return;
+    var sub=b.querySelector('.dvg-subtitle'), st=G('dvg-streak');
+    var used=sub.offsetHeight+parseFloat(getComputedStyle(sub).marginBottom)+st.offsetHeight+22+20;
+    var w=Math.min(b.clientWidth*0.9,330,b.clientHeight-used);
+    G('dvg-grid').style.width=Math.max(120,Math.floor(w))+'px';
+  }
+  window.addEventListener('resize',fitGrid);
+
   function newRound(){
     S.moves=0; S.seconds=0; S.paused=false;
     G('dvg-moves').textContent='0';
@@ -834,6 +846,7 @@
     }
     S.tiles=arr;
     renderGrid(); renderDots(); renderStreak(); startTimer();
+    fitGrid();
   }
 
   function renderGrid(glow){
@@ -1075,6 +1088,7 @@
     load(); applyDark(); applySound();
     if(!S.tiles) newRound();
     else S.paused=!!document.querySelector('#dv-bg-w .dvg-screen.on');
+    requestAnimationFrame(fitGrid);
   }
   function closeGame(){
     S.paused=true;
