@@ -109,6 +109,7 @@
       '#dvBibleSize{flex:1;accent-color:var(--dv-primary)}' +
       '.dv-bible-find{width:100%;padding:12px 16px;border:2px solid var(--dv-border);border-radius:12px;background:var(--dv-bg);color:var(--dv-text);font-size:1rem;font-family:inherit}' +
       '.dv-bible-head{font-size:1.35rem;font-weight:700;color:var(--dv-text);margin-bottom:4px}' +
+      '#dvBibleTip{background:#8FD3FF;color:#000;font-weight:700;padding:12px 14px;border-radius:8px;border-left:6px solid #000}' +
       '.dv-bible-hint{font-size:1rem;color:var(--dv-text-sub);margin-bottom:12px;line-height:1.5}' +
       '.dv-bible-text{font-family:Roboto,sans-serif;padding-bottom:0}' +
       '.dv-bible-vs{font-size:var(--dvBs,23px);line-height:1.7;color:var(--dv-text);margin-bottom:6px;padding:4px 8px;border-radius:8px;cursor:pointer;border-left:4px solid transparent}' +
