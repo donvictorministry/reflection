@@ -300,7 +300,7 @@ function dvRenderTodos() {
     html += '<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--dv-surface);border-radius:10px;margin-bottom:8px;border:1px solid var(--dv-border);">' +
       '<input type="checkbox" ' + (t.done ? 'checked' : '') + ' data-dv-ti="' + i + '" style="width:22px;height:22px;accent-color:var(--dv-primary);cursor:pointer;">' +
       '<span style="flex:1;font-size:1rem;' + (t.done ? 'text-decoration:line-through;color:var(--dv-text-sub);' : '') + '">' + t.text + '</span>' +
-      '<button data-dv-tdel="' + i + '" style="background:transparent;border:none;color:#DC2626;cursor:pointer;padding:4px;font-size:1.1rem;">X</button>' +
+      '<button data-dv-tdel="' + i + '" style="background:transparent;border:none;color:#DC2626;cursor:pointer;padding:4px;font-size:1.1rem;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></button>' +
       '</div>';
   }
   list.innerHTML = html;
@@ -364,6 +364,23 @@ function dvBuildQuickActions() {
       dvNavigate(items[parseInt(btn.getAttribute('data-dv-qa'))].route);
     });
   });
+}
+
+/* ===== HOME: DAILY STREAK + INVITE ===== */
+function dvStreakInit() {
+  var today = new Date().toDateString(), n = 1, last = '';
+  try { var s = JSON.parse(localStorage.getItem('dvStreak') || 'null'); if (s) { last = s.last; n = s.n; } } catch (e) {}
+  if (last !== today) {
+    var y = new Date(Date.now() - 86400000).toDateString();
+    n = (last === y) ? n + 1 : 1;
+    try { localStorage.setItem('dvStreak', JSON.stringify({ last: today, n: n })); } catch (e) {}
+  }
+  var el = document.getElementById('dvStreak');
+  if (el) el.innerHTML = '<div class="dv-streak-n">\uD83D\uDD25 ' + n + ' Day Streak</div><div class="dv-streak-s">Open the app every day to keep it growing.</div>';
+}
+function dvInvite() {
+  var text = 'Join me on Reflect & Align \u2014 reflect on your life purpose and align with divine direction. ' + dvUrl('');
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
 }
 
 /* ===== ROUTER (clean paths; hash fallback) ===== */
@@ -500,6 +517,8 @@ if ('serviceWorker' in navigator && dvMode === 'path') {
     dvBuildLeftNav();
     dvBuildRightNav();
     dvBuildQuickActions();
+    dvStreakInit();
+    document.getElementById('dvInvite').addEventListener('click', dvInvite);
     dvRestoreFrom404();
     dvResolve();
   }
