@@ -26,7 +26,7 @@
       '.dv-dev-bio h4{font-size:1.2rem;font-weight:800;color:var(--dv-text);margin:.5rem 0 0;padding-left:10px;border-left:4px solid var(--dv-primary);line-height:1.65rem}' +
       '.dv-dev-bio p{margin:0 0 .3rem}' +
       '.dv-dev-bio ul{margin:0 0 .3rem;padding-left:22px}' +
-      '.dv-dev-hl{background:#FFD700;color:#000;font-weight:400;padding:2px 6px;border-radius:6px;border-left:4px solid #000;-webkit-box-decoration-break:clone;box-decoration-break:clone}' +
+      '.dv-dev-bio p.dv-dev-hl{background:#FFD700;color:#000;font-weight:400;padding:4px 10px;border-radius:8px;border-left:6px solid #000;margin:0 0 .3rem}' +
       '.dv-dev-more[hidden]{display:none}' +
       '.dv-dev-more{background:none;border:none;color:var(--dv-primary);font-weight:700;font-size:1rem;font-family:inherit;cursor:pointer;padding:10px 0;display:block;margin:0 auto}';
     var dvDevStyle = document.createElement('style');
@@ -46,15 +46,15 @@
         '<div class="dv-dev-role">Ordained Minister &middot; Theologian &middot; Technology Innovator</div>' +
         '<div class="dv-dev-bio dv-clamp" id="dvDevBio">' +
           '<h4>About</h4>' +
-          '<p>Rev. Dr. Chris Johnson, PhD is an <span class="dv-dev-hl">ordained minister, theologian, and technology innovator</span>.</p>' +
+          '<p class="dv-dev-hl">Rev. Dr. Chris Johnson, PhD is an ordained minister, theologian, and technology innovator.</p>' +
           '<h4>Founder Of</h4>' +
-          '<ul><li><span class="dv-dev-hl">Biblefirm Christian Tech Ministry</span></li><li><span class="dv-dev-hl">CEMLCA</span> (Centre for Ministry and Leadership Christian Academy)</li><li><span class="dv-dev-hl">Chris Ministries Online Community</span></li></ul>' +
+          '<ul><li>Biblefirm Christian Tech Ministry</li><li>CEMLCA (Centre for Ministry and Leadership Christian Academy)</li><li>Chris Ministries Online Community</li></ul>' +
           '<h4>Mission</h4>' +
-          '<p>Reaching <span class="dv-dev-hl">six million souls across six continents</span> through digital ministry technology.</p>' +
+          '<p class="dv-dev-hl">Reaching six million souls across six continents through digital ministry technology.</p>' +
           '<h4>Approach</h4>' +
-          '<p>Rev. Dr. Johnson builds all applications personally on Android &mdash; believing that the most effective ministry tools are built by those who <span class="dv-dev-hl">understand the ministry firsthand</span>.</p>' +
+          '<p>Rev. Dr. Johnson builds all applications personally on Android &mdash; believing that the most effective ministry tools are built by those who understand the ministry firsthand.</p>' +
           '<h4>Vision</h4>' +
-          '<p>His work <span class="dv-dev-hl">bridges theology and technology</span>, making God\'s Word accessible to every generation.</p>' +
+          '<p class="dv-dev-hl">His work bridges theology and technology, making God\'s Word accessible to every generation.</p>' +
         '</div>' +
         '<button class="dv-dev-more" id="dvDevMore" hidden>Show more</button>';
     }
@@ -83,11 +83,6 @@
         title: "About Developer",
         html: dvDevHTML(),
         onOpen: dvDevInit
-      },
-
-      copyright: {
-        title: "Proprietary Software Copyright Notice",
-        html: "<div class='dv-copy-box'><strong>PROPRIETARY SOFTWARE COPYRIGHT NOTICE</strong><br><br>Copyright &copy; " + new Date().getFullYear() + " Rev. Dr. Chris Johnson, PhD. All Rights Reserved.<br><br>This software, including all associated source code, design elements, application logic, and content, is the exclusive proprietary property of Rev. Dr. Chris Johnson, PhD and DV Biblefirm.<br><br>No part of this software may be reproduced, distributed, reverse-engineered, decompiled, disassembled, modified, or transmitted in any form or by any means without the prior written permission of Rev. Dr. Chris Johnson, PhD.<br><br>Unauthorized use, copying, or distribution of this software, in whole or in part, may result in severe civil and criminal penalties and will be prosecuted to the maximum extent permitted by law.</div><p>All Bible verse content is used for non-commercial ministry purposes. All translation rights remain with their respective copyright holders.</p>"
       },
 
       community: {
@@ -126,7 +121,6 @@
     var dvLeftNavItems = [
       { key:'about_us', route:'about-us', label:'About Us', icon:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>' },
       { key:'about_dev', route:'about-developer', label:'About Developer', icon:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' },
-      { key:'copyright', route:'copyright-notice', label:'Proprietary Copyright Notice', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>' },
       { key:'community', route:'online-community', label:'Online Community (WhatsApp)', icon:'<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967c-.273-.099-.471-.148-.67.15"/>' },
       { key:'support', route:'support-us', label:'Support Us', icon:'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>' },
       { key:'terms', route:'terms-of-use', label:'Terms of Use', icon:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>' },
